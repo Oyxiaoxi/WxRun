@@ -16,14 +16,16 @@ App({
               code: res.code
             },
             method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-            // header: {}, // 设置请求的 header
+            header: {
+              'content-type': 'application/json'
+            }, // 设置请求的 header
             success: function(res){
               // success
-              util.log(res.data)
+              console.log(res.data)
             },
             fail: function() {
               // fail
-              util.log('获取用户登录态失败！' + res.errMsg)
+              console.log('获取用户登录态失败！' + res.errMsg)
             },
             complete: function() {
               // complete
@@ -40,6 +42,7 @@ App({
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
+            withCredentials: true,
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
@@ -58,3 +61,5 @@ App({
     userInfo: null
   }
 })
+
+
